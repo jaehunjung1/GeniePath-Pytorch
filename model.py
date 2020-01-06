@@ -45,7 +45,7 @@ class GeniePathLayer(nn.Module):
 
 
 class GeniePath(nn.Module):
-    def __init__(self, in_dim, gat_dim, lstm_hidden_dim, out_dim, num_layers, device):
+    def __init__(self, in_dim, out_dim, gat_dim, lstm_hidden_dim, num_layers, device):
         super(GeniePath, self).__init__()
         self.device = device
         self.lstm_hidden_dim = lstm_hidden_dim

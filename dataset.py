@@ -11,7 +11,7 @@ def collate(samples):
     """
     graphs, labels = map(list, zip(*samples))
     graph = dgl.batch(graphs)
-    feats = torch.cat(list(map(lambda x: x.ndata['feat'], graphs)), dim=0)  # (sum of num_nodes in batch, 50)
-    labels = torch.cat(list(map(torch.from_numpy, labels)), dim=0)  # (sum of num_nodes in batch, 121)
+    feats = torch.cat(list(map(lambda x: x.ndata['feat'], graphs)), dim=0).float()  # (sum of num_nodes in batch, 50)
+    labels = torch.cat(list(map(torch.from_numpy, labels)), dim=0).float()  # (sum of num_nodes in batch, 121)
     return graph, feats, labels
 
