@@ -73,21 +73,21 @@ def main(_):
     # Training Phase
     for epoch_id in tqdm(range(start_epoch_id, epochs + 1)):
         model.train()
-        # for batch in train_loader:
-        #     graph, feats, labels = batch
-        #     feats = feats.to(device)
-        #
-        #     out = model(graph, feats)
-        #     optimizer.zero_grad()
-        #     loss = criterion(out, labels)
-        #     loss.backward()
-        #     optimizer.step()
-        #     step += 1
-        #
-        #     summary_writer.add_scalar("Loss/train", loss.detach().cpu().numpy(), global_step=step)
+        for batch in train_loader:
+            graph, feats, labels = batch
+            feats = feats.to(device)
 
-        # if epoch_id % 5 == 0:
-        eval(model, valid_loader, summary_writer, epoch_id)
+            out = model(graph, feats)
+            optimizer.zero_grad()
+            loss = criterion(out, labels)
+            loss.backward()
+            optimizer.step()
+            step += 1
+
+            summary_writer.add_scalar("Loss/train", loss.detach().cpu().numpy(), global_step=step)
+
+        if epoch_id % 5 == 0:
+            eval(model, valid_loader, summary_writer, epoch_id)
 
 
 if __name__ == "__main__":
