@@ -1,5 +1,7 @@
 import torch
 
+import dgl
+
 
 def collate(samples):
     """
@@ -8,7 +10,8 @@ def collate(samples):
     The labels are ndarray => sized (num_nodes, 121)
     """
     graphs, labels = map(list, zip(*samples))
+    graph = dgl.batch(graphs)
     feats = torch.cat(list(map(lambda x: x.ndata['feat'], graphs)), dim=0)  # (sum of num_nodes in batch, 50)
     labels = torch.cat(list(map(torch.from_numpy, labels)), dim=0)  # (sum of num_nodes in batch, 121)
-    return graphs, feats, labels
+    return graph, feats, labels
 
